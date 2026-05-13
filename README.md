@@ -5,12 +5,12 @@
 ```
 LOCAL (Docker Compose)                  REMOTE (Kaggle/Colab)
 ┌─────────────────────────┐            ┌──────────────────────┐
-│ gpu-node-manager :8001  │            │                      │
-│ billing-api      :8002  │◄──tunnel──►│  Jupyter Notebook    │
-│ spot-manager     :8003  │            │  (GPU workload +     │
-│ autoscaler       :8004  │            │   visualization)     │
-│ cost-tracker     :8005  │            │                      │
-│ gateway          :8000  │            └──────────────────────┘
+│ gpu-node-manager :8011  │            │                      │
+│ billing-api      :8012  │◄──tunnel──►│  Jupyter Notebook    │
+│ spot-manager     :8013  │            │  (GPU workload +     │
+│ autoscaler       :8014  │            │   visualization)     │
+│ cost-tracker     :8015  │            │                      │
+│ gateway          :8010  │            └──────────────────────┘
 └─────────────────────────┘
 ```
 
@@ -40,7 +40,7 @@ docker compose up --build -d
 
 Verify all services are running:
 ```bash
-curl http://localhost:8000/
+curl http://localhost:8010/
 ```
 
 ### Step 2: Expose via tunnel (free options)
@@ -48,20 +48,20 @@ curl http://localhost:8000/
 **Option A: ngrok (free tier)**
 ```bash
 # Install: https://ngrok.com/download
-ngrok http 8000
+ngrok http 8010
 # Copy the https://xxxx.ngrok-free.app URL
 ```
 
 **Option B: cloudflared (free, no account needed)**
 ```bash
 # Install: brew install cloudflare/cloudflare/cloudflared
-cloudflared tunnel --url http://localhost:8000
+cloudflared tunnel --url http://localhost:8010
 # Copy the https://xxxx.trycloudflare.com URL
 ```
 
 **Option C: localhost.run (zero install)**
 ```bash
-ssh -R 80:localhost:8000 nokey@localhost.run
+ssh -R 80:localhost:8010 nokey@localhost.run
 # Copy the generated URL
 ```
 
@@ -75,12 +75,12 @@ ssh -R 80:localhost:8000 nokey@localhost.run
 
 | Service | Port | Description |
 |---------|------|-------------|
-| Gateway | 8000 | Single entry point for notebook |
-| GPU Node Manager | 8001 | Mock multi-node GPU cluster |
-| Billing API | 8002 | Cloud billing simulation |
-| Spot Manager | 8003 | Spot instance bidding & preemption |
-| Autoscaler | 8004 | KEDA-like GPU autoscaling |
-| Cost Tracker | 8005 | OpenCost-like cost allocation |
+| Gateway | 8010 | Single entry point for notebook |
+| GPU Node Manager | 8011 | Mock multi-node GPU cluster |
+| Billing API | 8012 | Cloud billing simulation |
+| Spot Manager | 8013 | Spot instance bidding & preemption |
+| Autoscaler | 8014 | KEDA-like GPU autoscaling |
+| Cost Tracker | 8015 | OpenCost-like cost allocation |
 
 ## Lab Sections
 

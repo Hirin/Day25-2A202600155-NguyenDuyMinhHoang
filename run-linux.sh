@@ -43,8 +43,8 @@ case "${1:-start}" in
     sleep 5
 
     # Test gateway
-    if curl -s http://localhost:8000/ >/dev/null 2>&1; then
-      echo -e "  ${GREEN}Gateway is UP at http://localhost:8000${NC}"
+    if curl -s http://localhost:8010/ >/dev/null 2>&1; then
+      echo -e "  ${GREEN}Gateway is UP at http://localhost:8010${NC}"
     else
       print_error "Gateway not responding. Check: docker compose logs gateway"
       exit 1
@@ -55,12 +55,12 @@ case "${1:-start}" in
     echo -e "${GREEN} ALL SERVICES RUNNING${NC}"
     echo "=========================================="
     echo ""
-    echo "  Gateway:          http://localhost:8000"
-    echo "  GPU Node Manager: http://localhost:8001"
-    echo "  Billing API:      http://localhost:8002"
-    echo "  Spot Manager:     http://localhost:8003"
-    echo "  Autoscaler:       http://localhost:8004"
-    echo "  Cost Tracker:     http://localhost:8005"
+    echo "  Gateway:          http://localhost:8010"
+    echo "  GPU Node Manager: http://localhost:8011"
+    echo "  Billing API:      http://localhost:8012"
+    echo "  Spot Manager:     http://localhost:8013"
+    echo "  Autoscaler:       http://localhost:8014"
+    echo "  Cost Tracker:     http://localhost:8015"
     echo ""
     echo "Next: Run './run-linux.sh tunnel' to expose to Kaggle/Colab"
     ;;
@@ -72,7 +72,7 @@ case "${1:-start}" in
     if command -v cloudflared >/dev/null 2>&1; then
       print_info "Using cloudflared (free, no account needed)"
       echo "  Starting tunnel..."
-      cloudflared tunnel --url http://localhost:8000 2>&1 | tee "$PROJECT_DIR/.tunnel.log" &
+      cloudflared tunnel --url http://localhost:8010 2>&1 | tee "$PROJECT_DIR/.tunnel.log" &
       echo $! > "$TUNNEL_PID_FILE"
 
       # Wait up to 15s for the URL to appear
@@ -100,7 +100,7 @@ case "${1:-start}" in
 
     elif command -v ngrok >/dev/null 2>&1; then
       print_info "Using ngrok"
-      ngrok http 8000 &
+      ngrok http 8010 &
       echo $! > "$TUNNEL_PID_FILE"
       sleep 3
       # Get ngrok URL via API
@@ -143,7 +143,7 @@ case "${1:-start}" in
       echo "    # Download từ https://ngrok.com/download"
       echo ""
       echo "  Option C (zero install):"
-      echo "    ssh -R 80:localhost:8000 nokey@localhost.run"
+      echo "    ssh -R 80:localhost:8010 nokey@localhost.run"
       echo ""
       exit 1
     fi
@@ -170,7 +170,7 @@ case "${1:-start}" in
 
     echo ""
     echo "=== Gateway Health ==="
-    curl -s http://localhost:8000/ | python3 -m json.tool 2>/dev/null || echo "  Not running"
+    curl -s http://localhost:8010/ | python3 -m json.tool 2>/dev/null || echo "  Not running"
 
     echo ""
     echo "=== Tunnel ==="
@@ -189,7 +189,7 @@ case "${1:-start}" in
 
   test)
     print_step "Testing all endpoints..."
-    BASE="http://localhost:8000"
+    BASE="http://localhost:8010"
 
     endpoints=(
       "GET  / "

@@ -50,7 +50,7 @@ Kết quả mong đợi:
   Docker is running
 [STEP] 2/3 - Building and starting services...
 [STEP] 3/3 - Waiting for services to be healthy...
-  Gateway is UP at http://localhost:8000
+  Gateway is UP at http://localhost:8010
 
 ==========================================
  ALL SERVICES RUNNING
@@ -89,7 +89,7 @@ Kết quả thực tế (log mẫu):
 
 2026-05-12T15:58:25Z INF Version 2026.3.0
 2026-05-12T15:58:25Z INF GOOS: darwin, GOVersion: go1.26.1, GoArch: arm64
-2026-05-12T15:58:25Z INF Settings: map[ha-connections:1 protocol:quic url:http://localhost:8000]
+2026-05-12T15:58:25Z INF Settings: map[ha-connections:1 protocol:quic url:http://localhost:8010]
 2026-05-12T15:58:35Z INF Initial protocol quic
 2026-05-12T15:58:45Z INF Registered tunnel connection connIndex=0 location=hkg01 protocol=quic
 ```
@@ -167,8 +167,8 @@ open -a Docker    # Mở Docker Desktop
 
 ### Port đã bị chiếm
 ```bash
-# Xem ai đang dùng port 8000
-lsof -i :8000
+# Xem ai đang dùng port 8010
+lsof -i :8010
 # Kill process đó
 kill -9 <PID>
 ```
@@ -178,7 +178,7 @@ kill -9 <PID>
 # Xem log trực tiếp
 cat .tunnel.log
 # Hoặc chạy thủ công
-cloudflared tunnel --url http://localhost:8000
+cloudflared tunnel --url http://localhost:8010
 ```
 
 ### Kaggle/Colab không connect được
@@ -205,10 +205,10 @@ gpu-finops-lab/
 ├── notebook/
 │   └── gpu_finops_lab.ipynb    ← Upload lên Kaggle/Colab
 └── services/
-    ├── gateway/                ← API Gateway (port 8000)
-    ├── gpu-node-manager/       ← Mock GPU cluster (port 8001)
-    ├── billing-api/            ← Mock billing (port 8002)
-    ├── spot-manager/           ← Spot instances (port 8003)
-    ├── autoscaler/             ← KEDA-like (port 8004)
-    └── cost-tracker/           ← OpenCost-like (port 8005)
+    ├── gateway/                ← API Gateway (port 8010)
+    ├── gpu-node-manager/       ← Mock GPU cluster (port 8011)
+    ├── billing-api/            ← Mock billing (port 8012)
+    ├── spot-manager/           ← Spot instances (port 8013)
+    ├── autoscaler/             ← KEDA-like (port 8014)
+    └── cost-tracker/           ← OpenCost-like (port 8015)
 ```

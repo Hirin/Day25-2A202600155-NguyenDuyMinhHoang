@@ -5,7 +5,7 @@ services:
   gpu-node-manager:
     build: ./services/gpu-node-manager
     ports:
-      - "8001:8000"
+      - "8011:8000"
     environment:
       - NUM_NODES=4
       - GPUS_PER_NODE=2
@@ -15,7 +15,7 @@ services:
   billing-api:
     build: ./services/billing-api
     ports:
-      - "8002:8000"
+      - "8012:8000"
     environment:
       - T4_PRICE_PER_HOUR=0.35
       - A100_PRICE_PER_HOUR=3.67
@@ -26,7 +26,7 @@ services:
   spot-manager:
     build: ./services/spot-manager
     ports:
-      - "8003:8000"
+      - "8013:8000"
     depends_on:
       - gpu-node-manager
       - billing-api
@@ -38,7 +38,7 @@ services:
   autoscaler:
     build: ./services/autoscaler
     ports:
-      - "8004:8000"
+      - "8014:8000"
     depends_on:
       - gpu-node-manager
       - billing-api
@@ -53,7 +53,7 @@ services:
   cost-tracker:
     build: ./services/cost-tracker
     ports:
-      - "8005:8000"
+      - "8015:8000"
     depends_on:
       - gpu-node-manager
       - billing-api
@@ -65,7 +65,7 @@ services:
   gateway:
     build: ./services/gateway
     ports:
-      - "8000:8000"
+      - "8010:8000"
     depends_on:
       - gpu-node-manager
       - billing-api
